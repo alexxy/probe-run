@@ -71,6 +71,8 @@ fn check_processor_target_compatability(cores: &[Core], elf_path: &Path) {
                 || target == "thumbv8m.main-none-eabi"
                 || target == "thumbv8m.main-none-eabihf"
         }
+        CoreType::Armv7a => return,
+        CoreType::Armv8a => return,
         CoreType::Riscv => return, // NOTE(return) Since we do not get any info about instruction
                                    // set support from probe-rs we do not know which compilation
                                    // targets fit.
@@ -88,6 +90,8 @@ fn check_processor_target_compatability(cores: &[Core], elf_path: &Path) {
         CoreType::Armv8m => {
             "should be 'thumbv8m.base-none-eabi' (M23), 'thumbv8m.main-none-eabi' (M33 no FPU), or 'thumbv8m.main-none-eabihf' (M33 with FPU)"
         }
+        CoreType::Armv7a => unreachable!(),
+        CoreType::Armv8a => unreachable!(),
         CoreType::Riscv => unreachable!(),
     };
     log::warn!("Compilation target ({target}) and core type ({core_type:?}) do not match. Your compilation target {recommendation}.");

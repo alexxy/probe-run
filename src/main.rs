@@ -188,7 +188,7 @@ fn start_program(sess: &mut Session, elf: &Elf) -> anyhow::Result<()> {
     let mut core = sess.core(0)?;
 
     log::debug!("starting device");
-    if core.get_available_breakpoint_units()? == 0 {
+    if core.available_breakpoint_units()? == 0 {
         if elf.rtt_buffer_address().is_some() {
             bail!("RTT not supported on device without HW breakpoints");
         } else {
